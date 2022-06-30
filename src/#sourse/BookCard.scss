@@ -1,0 +1,72 @@
+.bookcard{
+   display: flex;
+   flex-direction: column;
+
+   padding: 24px;
+
+   margin-bottom: 40px;
+
+   width: 100%;
+   height: 418px;
+
+   background: #FFFFFF;
+   border-radius: 3px;
+
+   transition: all 0.2s;
+
+   &:hover{
+      cursor: pointer;
+      box-shadow: 0px 8px 24px rgba(129, 135, 189, 0.15);
+   }
+
+   .img-element{
+
+      overflow:hidden;
+      width: 100%;
+      height: 250px;
+      margin: 5px;
+      float: left;
+      
+      position: relative;
+      img{
+         position: absolute;
+         top: 0;
+         bottom: 0;
+         left: 0;
+         right: 0;
+         margin: auto;
+         filter: drop-shadow(0px 0px 5px #4140406a);
+      }
+   }
+
+   .category-title, .book-authors{
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+
+      padding: 0;
+      margin-bottom: 16px;
+      /* identical to box height */
+
+      text-decoration-line: underline;
+
+      color: #B8B8B8;
+   }
+
+   .book-authors{
+      text-decoration: none;
+      padding: 0;
+      margin: 0;
+   }
+   
+   .book-title{
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+
+      color: #000000;
+
+      margin-bottom: 8px;
+   }
+}

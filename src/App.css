@@ -68,7 +68,7 @@
 }
 .bg-images div .bookmark-3 {
   position: absolute;
-  top: 30%;
+  top: 27%;
   left: 80%;
 }
 .bg-images div .bookmark-4 {
@@ -105,4 +105,8 @@
 }
 .logo-title h1 span {
   color: #29335C;
+}
+
+.bookcards-list {
+  margin: 56px 0;
 }

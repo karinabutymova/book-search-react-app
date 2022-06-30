@@ -9,7 +9,7 @@ const SearchForm = ({ result }) => {
 
    const [apiKey] = useState("AIzaSyArvsaejhkJKVKaMHhXUFldx-6zBjbVOIw");
 
-
+   // обработка изменений элементов формы
    const handleChange = (e) => {
       switch (e.currentTarget.name) {
          case 'title':
@@ -17,9 +17,11 @@ const SearchForm = ({ result }) => {
             break;
          case 'category':
             setCategory(e.currentTarget.value);
+            // handleSubmit(e);
             break;
          case 'sort':
             setSort(e.currentTarget.value);
+            // handleSubmit(e);
             break;
          default:
             break;
@@ -29,13 +31,16 @@ const SearchForm = ({ result }) => {
    const handleSubmit = (e) => {
       e.preventDefault();
 
-      axios.get(`https://www.googleapis.com/books/v1/volumes?q=${titleInput}&orderBy=${sort}&key=${apiKey}&maxResults=30`)
+      // get запрос
+      axios.get(`https://www.googleapis.com/books/v1/volumes?q=${titleInput}&orderBy=${sort}&key=${apiKey}&maxResults=10`)
          .then(data => {
-            result(data.data.items);
+            if (data.data.items)
+               result(data.data.items);
          })
          .catch(error => console.log(error));
    }
 
+   // отправить форму по нажатию Enter
    const handleKeyPress = (e) => {
       if (e.key === "Enter") handleSubmit(e);
    }

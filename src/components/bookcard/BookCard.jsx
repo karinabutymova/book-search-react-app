@@ -1,15 +1,17 @@
 import React from 'react';
 import './BookCard.css';
 
-const BookCard = () => {
-
+const BookCard = ({ book }) => {
    return (
-      <div className="bookcards-list">
-         <div className="container">
-            <div className="row">
-            </div>
+      <div className="bookcard">
+         <div className="img-element">
+            <img src={book.volumeInfo.imageLinks === undefined ? "" : `${book.volumeInfo.imageLinks.thumbnail}`} alt={book.volumeInfo.title} />
          </div>
+         <p className="category-title">{book.volumeInfo.categories === undefined ? " " : book.volumeInfo.categories[0]}</p>
+         <p className="book-title">{book.volumeInfo.title === undefined ? " " : book.volumeInfo.title}</p>
+         <p className="book-authors">{book.volumeInfo.authors === undefined ? " " : book.volumeInfo.authors.join(', ')}</p>
       </div>
+
    );
 }
 

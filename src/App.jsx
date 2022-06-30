@@ -3,6 +3,7 @@ import './App.css';
 import logo from './images/logo.png';
 import BackgroundSvg from './components/BackgroundSvg';
 import SearchForm from './components/form/SearchForm';
+import BookCard from './components/bookcard/BookCard';
 
 function App() {
 
@@ -20,12 +21,25 @@ function App() {
             </div>
          </div>
 
+         {/* форма поиска*/}
          <SearchForm result={setResult} />
 
-         {result.map(book => (
-            <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.title} />
-         ))}
+         <div className="bookcards-list">
+            <div className="container">
+               <div className="row">
 
+                  {/* вывод карточек книг */}
+                  {result.length > 0 &&
+                     result.map(book => (
+                        <div className="col-6 col-md-4 col-lg-3" key={book.id}>
+                           <BookCard
+                              book={book} />
+                        </div>
+                     ))
+                  }
+               </div>
+            </div>
+         </div>
       </div>
    );
 }
