@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import './SearchForm.css';
 
-const SearchForm = ({ result }) => {
+const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
    const [titleInput, setTitleInput] = useState('');
    const [category, setCategory] = useState('All');
    const [sort, setSort] = useState('relevance');
@@ -17,11 +17,9 @@ const SearchForm = ({ result }) => {
             break;
          case 'category':
             setCategory(e.currentTarget.value);
-            // handleSubmit(e);
             break;
          case 'sort':
             setSort(e.currentTarget.value);
-            // handleSubmit(e);
             break;
          default:
             break;
@@ -30,19 +28,36 @@ const SearchForm = ({ result }) => {
 
    const handleSubmit = (e) => {
       e.preventDefault();
+      isLoading(true);
+      // проверка на пустоту поля input
+      if (!titleInput) {
+         result([]);
+         errorMsg('Please, enter book title');
+         isLoading(false);
+      }
+      else {
+         // get запрос
+         axios.get(`https://www.googleapis.com/books/v1/volumes?q=${titleInput}&orderBy=${sort}&key=${apiKey}&maxResults=40`)
+            .then(data => {
+               data.data.items ? result(data.data.items) : errorMsg(`No books found for '${titleInput}' :(`);
+               totalItems(data.data.totalItems);
+               errorMsg('');
+               isLoading(false);
+            })
+            .catch(error => {
+               errorMsg('Sorry, cannot connect to Google Book API. Please try again!');
+               isLoading(false);
+            });
+      }
 
-      // get запрос
-      axios.get(`https://www.googleapis.com/books/v1/volumes?q=${titleInput}&orderBy=${sort}&key=${apiKey}&maxResults=10`)
-         .then(data => {
-            if (data.data.items)
-               result(data.data.items);
-         })
-         .catch(error => console.log(error));
    }
 
    // отправить форму по нажатию Enter
    const handleKeyPress = (e) => {
-      if (e.key === "Enter") handleSubmit(e);
+      if (e.key === "Enter") {
+         isLoading(true);
+         handleSubmit(e);
+      }
    }
 
    return (

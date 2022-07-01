@@ -18,6 +18,94 @@
   src: url("/src/fonts/Gilroy-Semibold.ttf");
   font-weight: 600;
 }
+.box {
+  margin-top: 60px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.container-box {
+  height: 15px;
+  width: 110px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+.container-box .circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #E4572E;
+  -webkit-animation: move 500ms linear 0ms infinite;
+          animation: move 500ms linear 0ms infinite;
+  margin-right: 30px;
+}
+.container-box .circle:first-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-animation: grow 500ms linear 0ms infinite;
+          animation: grow 500ms linear 0ms infinite;
+}
+.container-box .circle:last-child {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 0;
+  animation: grow 500ms linear 0s infinite reverse;
+}
+
+@-webkit-keyframes grow {
+  from {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
+@keyframes grow {
+  from {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes move {
+  from {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  to {
+    -webkit-transform: translateX(45px);
+            transform: translateX(45px);
+  }
+}
+@keyframes move {
+  from {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  to {
+    -webkit-transform: translateX(45px);
+            transform: translateX(45px);
+  }
+}
 .bg-images {
   position: absolute;
   width: 100%;
@@ -108,5 +196,14 @@
 }
 
 .bookcards-list {
-  margin: 56px 0;
+  margin: 40px;
+}
+
+.error {
+  text-align: center;
+}
+
+.total-book-count {
+  text-align: center;
+  margin-bottom: 32px;
 }
