@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import '../App.scss';
 import matrix from '../assets/images/circle-matrix.svg';
 import bookmark from '../assets/images/bookmark.svg';
 // import './SearchForm.css';

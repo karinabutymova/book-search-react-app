@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import './SearchForm.css';
+import './SearchForm.scss';
 
 const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
    const [titleInput, setTitleInput] = useState('');
-   const [category, setCategory] = useState('All');
+   const [category, setBookCategory] = useState('All');
    const [sort, setSort] = useState('relevance');
 
    const [apiKey] = useState("AIzaSyArvsaejhkJKVKaMHhXUFldx-6zBjbVOIw");
@@ -16,7 +16,7 @@ const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
             setTitleInput(e.currentTarget.value);
             break;
          case 'category':
-            setCategory(e.currentTarget.value);
+            setBookCategory(e.currentTarget.value);
             break;
          case 'sort':
             setSort(e.currentTarget.value);
@@ -29,6 +29,7 @@ const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
    const handleSubmit = (e) => {
       e.preventDefault();
       isLoading(true);
+
       // проверка на пустоту поля input
       if (!titleInput) {
          result([]);
@@ -36,18 +37,7 @@ const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
          isLoading(false);
       }
       else {
-         // get запрос
-         axios.get(`https://www.googleapis.com/books/v1/volumes?q=${titleInput}&orderBy=${sort}&key=${apiKey}&maxResults=40`)
-            .then(data => {
-               data.data.items ? result(data.data.items) : errorMsg(`No books found for '${titleInput}' :(`);
-               totalItems(data.data.totalItems);
-               errorMsg('');
-               isLoading(false);
-            })
-            .catch(error => {
-               errorMsg('Sorry, cannot connect to Google Book API. Please try again!');
-               isLoading(false);
-            });
+         searchBookQuery();
       }
 
    }
@@ -59,6 +49,34 @@ const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
          handleSubmit(e);
       }
    }
+
+   const searchBookQuery = () => {
+      // get запрос
+      let request = `https://www.googleapis.com/books/v1/volumes?q=intitle:${titleInput}`;
+      category !== 'All' ? request += `+subject:${category}&orderBy=${sort}&maxResults=30&key=${apiKey}` : request += `&orderBy=${sort}&maxResults=30&key=${apiKey}`;
+      axios.get(request)
+         .then(data => {
+            console.log(data.data.items)
+
+            if (data.data.items && data.data.totalItems) {
+               result([]);
+               errorMsg('');
+               result(data.data.items);
+               totalItems(data.data.totalItems);
+            } else {
+               category === 'all' ? errorMsg(`No books found for '${titleInput}' :(`) : errorMsg(`No books found for '${titleInput}' in this category :(`);
+               totalItems('');
+               result([]);
+            }
+
+            isLoading(false);
+         })
+         .catch(error => {
+            errorMsg('Sorry, cannot connect to Google Book API. Please try again!');
+            isLoading(false);
+         });
+   }
+
 
    return (
       <div className="search-form">
@@ -87,13 +105,13 @@ const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
                         name="category"
                         value={category}
                         onChange={handleChange}>
-                        <option value="all">All</option>
-                        <option value="art">Art</option>
-                        <option value="biography">Biography</option>
-                        <option value="computers">Computers</option>
-                        <option value="history">History</option>
-                        <option value="medical">Medical</option>
-                        <option value="poetry">Poetry</option>
+                        <option value="All">All</option>
+                        <option value="Art">Art</option>
+                        <option value="Biography">Biography</option>
+                        <option value="Computers">Computers</option>
+                        <option value="History">History</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Poetry">Poetry</option>
                      </select>
 
                   </div>
