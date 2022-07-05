@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import SearchPage from './components/searchpage/searchPage';
+import SearchPage from './components/searchpage/SearchPage';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import BookPage from './components/bookpage/BookPage';

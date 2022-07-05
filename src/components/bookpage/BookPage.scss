@@ -1,0 +1,140 @@
+.logo-title-book-page{
+   margin: 40px 0;
+
+   @media screen and (max-width: 576px) {
+      margin: 24px 0;
+   }
+
+   h1{
+      color: #E4572E;
+   
+      font-weight: 600;
+      font-size: 26px;
+      line-height: 32px;
+   
+      text-align: center;
+   
+      span{
+         color: #29335C;
+      }
+   }
+}
+
+.logo-link{
+   text-decoration: none;
+}
+
+.book-page{
+   background-color: #fff;
+   padding: 80px 80px 80px 0;
+
+   margin-bottom: 40px;
+
+   @media screen and (max-width: 576px) {
+      padding: 40px 40px 40px 0;
+   }
+
+   .book-page-img{
+      text-align: center;
+      padding-bottom: 40px;
+
+      img{
+         width: 63%;
+         filter: drop-shadow(0px 0px 5px #4140406a);
+      }
+
+      .thumbnail-img{
+         width: 35%;
+         filter: drop-shadow(0px 0px 5px #4140406a);
+      }
+   }
+
+   .book-page-info{
+      width: 100%;
+      margin-left: -30px;
+
+      .category-title, .book-authors{
+         width: 100%;
+         font-weight: 400;
+         font-size: 13px;
+         line-height: 16px;
+
+         color: #B8B8B8;
+
+         margin-bottom: 24px;
+      }
+      .book-authors{
+         font-size: 14px;
+         color: #949494;
+      }
+      .book-title{
+         font-weight: 600;
+         font-size: 24px;
+         line-height: 24px;
+
+         color: #000000;
+
+         margin-bottom: 24px;
+      }
+
+      .book-description{
+         font-weight: 400;
+         font-size: 14px;
+         line-height: 16px;
+
+         color: #343434;
+
+         margin-bottom: 32px;
+      }
+
+      .link-buttons{
+         display: flex;
+         gap: 24px;
+         align-items: center;
+
+         .more-button{
+            padding: 13px 38px;
+
+            background: #29335C;
+            border: 1px solid #29335C;
+
+            box-shadow: 0px 8px 24px rgba(129, 135, 189, 0.15);
+            border-radius: 3px;
+
+            color: #fff;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+            text-decoration: none;
+
+            transition: all 0.2s;
+
+            &:hover{
+               background: transparent;
+               color: #29335C;
+            }
+
+            @media screen and (max-width: 576px) {
+               font-size: 14px;
+               padding: 13px 24px;
+            }
+         }
+
+         .back-to-search{
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+            text-align: center;
+            text-decoration-line: underline;
+
+            color: rgba(41, 51, 92, 0.7);
+            transition: all 0.2s;
+
+            &:hover{
+               color: rgb(41, 51, 92);
+            }
+           
+         }
+      }
+   }
+}

@@ -39,7 +39,6 @@ const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
       else {
          searchBookQuery();
       }
-
    }
 
    // отправить форму по нажатию Enter
@@ -56,8 +55,6 @@ const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
       category !== 'All' ? request += `+subject:${category}&orderBy=${sort}&maxResults=30&key=${apiKey}` : request += `&orderBy=${sort}&maxResults=30&key=${apiKey}`;
       axios.get(request)
          .then(data => {
-            console.log(data.data.items)
-
             if (data.data.items && data.data.totalItems) {
                result([]);
                errorMsg('');

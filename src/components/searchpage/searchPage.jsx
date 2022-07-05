@@ -3,6 +3,7 @@ import logo from '../../assets/images/logo.png';
 import BackgroundSvg from '../BackgroundSvg';
 import SearchForm from '../form/SearchForm';
 import BookCard from '../bookcard/BookCard';
+import Preloader from '../preloader/Preloader';
 
 
 const SearchPage = () => {
@@ -35,20 +36,7 @@ const SearchPage = () => {
             <div className="container">
                {/* загрузка результатов */}
                {isLoading ?
-                  (
-                     <div className="row justify-content-center">
-                        <div className="col-6">
-                           <div className="box">
-                              <div className="container-box">
-                                 <span className="circle"></span>
-                                 <span className="circle"></span>
-                                 <span className="circle"></span>
-                                 <span className="circle"></span>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  ) : (
+                  <Preloader /> : (
                      <div className="row">
                         {/* показать ошибку */}
                         {errorMessage && <h5 className='col-12 error'>{errorMessage}</h5>}
@@ -71,7 +59,7 @@ const SearchPage = () => {
             </div>
 
          </div>
-      </div>
+      </div >
    );
 }
 
