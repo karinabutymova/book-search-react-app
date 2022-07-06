@@ -1,8 +1,9 @@
 import React from 'react';
-import '../App.scss';
-import matrix from '../assets/images/circle-matrix.svg';
-import bookmark from '../assets/images/bookmark.svg';
-// import './SearchForm.css';
+import './SearchPage.scss';
+import matrix from '../../assets/images/circle-matrix.svg';
+import bookmark from '../../assets/images/bookmark.svg';
+
+
 
 const BackgroundSvg = () => {
    return (

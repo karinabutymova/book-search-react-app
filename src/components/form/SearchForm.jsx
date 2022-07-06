@@ -1,8 +1,7 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import './SearchForm.scss';
 
-const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
+const SearchForm = ({ errorMsg, setRequestData }) => {
    const [titleInput, setTitleInput] = useState('');
    const [category, setBookCategory] = useState('All');
    const [sort, setSort] = useState('relevance');
@@ -28,52 +27,23 @@ const SearchForm = ({ result, errorMsg, totalItems, isLoading }) => {
 
    const handleSubmit = (e) => {
       e.preventDefault();
-      isLoading(true);
 
       // проверка на пустоту поля input
       if (!titleInput) {
-         result([]);
          errorMsg('Please, enter book title');
-         isLoading(false);
       }
       else {
-         searchBookQuery();
+         let data = { titleInput, category, sort, apiKey };
+         setRequestData(data);
       }
    }
 
    // отправить форму по нажатию Enter
    const handleKeyPress = (e) => {
       if (e.key === "Enter") {
-         isLoading(true);
          handleSubmit(e);
       }
    }
-
-   const searchBookQuery = () => {
-      // get запрос
-      let request = `https://www.googleapis.com/books/v1/volumes?q=intitle:${titleInput}`;
-      category !== 'All' ? request += `+subject:${category}&orderBy=${sort}&maxResults=30&key=${apiKey}` : request += `&orderBy=${sort}&maxResults=30&key=${apiKey}`;
-      axios.get(request)
-         .then(data => {
-            if (data.data.items && data.data.totalItems) {
-               result([]);
-               errorMsg('');
-               result(data.data.items);
-               totalItems(data.data.totalItems);
-            } else {
-               category === 'all' ? errorMsg(`No books found for '${titleInput}' :(`) : errorMsg(`No books found for '${titleInput}' in this category :(`);
-               totalItems('');
-               result([]);
-            }
-
-            isLoading(false);
-         })
-         .catch(error => {
-            errorMsg('Sorry, cannot connect to Google Book API. Please try again!');
-            isLoading(false);
-         });
-   }
-
 
    return (
       <div className="search-form">

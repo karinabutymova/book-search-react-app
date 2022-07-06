@@ -22,13 +22,13 @@ const BookPage = () => {
          axios.get(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
             .then(data => {
                setBook(data.data);
-               isLoading(false);
             })
             .catch(error => {
                setError('Sorry, cannot connect to Google Book API. Please try again!');
+            })
+            .finally(() => {
                isLoading(false);
             });
-
       };
 
       fetchBook();

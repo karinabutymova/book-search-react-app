@@ -1,23 +1,23 @@
-@font-face {
-   font-family: "Gilroy";
-   src: url("./fonts/Gilroy-Light.ttf");
-   font-weight: 300;
- }
- @font-face {
-   font-family: "Gilroy";
-   src: url("./fonts/Gilroy-Regular.ttf");
-   font-weight: 400;
- }
- @font-face {
-   font-family: "Gilroy";
-   src: url("./fonts/Gilroy-Medium.ttf");
-   font-weight: 500;
- }
- @font-face {
-   font-family: "Gilroy";
-   src: url("./fonts/Gilroy-Semibold.ttf");
-   font-weight: 600;
- }
+// @font-face {
+//    font-family: "Gilroy";
+//    src: url("./fonts/Gilroy-Light.ttf");
+//    font-weight: 300;
+//  }
+//  @font-face {
+//    font-family: "Gilroy";
+//    src: url("./fonts/Gilroy-Regular.ttf");
+//    font-weight: 400;
+//  }
+//  @font-face {
+//    font-family: "Gilroy";
+//    src: url("./fonts/Gilroy-Medium.ttf");
+//    font-weight: 500;
+//  }
+//  @font-face {
+//    font-family: "Gilroy";
+//    src: url("./fonts/Gilroy-Semibold.ttf");
+//    font-weight: 600;
+//  }
 
 
 .bg-images{
@@ -127,4 +127,28 @@
 .total-book-count{
    text-align: center;
    margin-bottom: 32px;
+}
+
+.btn-load-more{
+   width: 100%;
+   padding: 13px 10px;
+
+   background: #29335C;
+   border: 1px solid #29335C;
+
+   box-shadow: 0px 8px 24px rgba(129, 135, 189, 0.15);
+   border-radius: 3px;
+
+   color: #fff;
+   font-weight: 500;
+   font-size: 16px;
+   line-height: 19px;
+   text-decoration: none;
+
+   transition: all 0.2s;
+
+   &:hover{
+      background: transparent;
+      color: #29335C;
+   }
 }
