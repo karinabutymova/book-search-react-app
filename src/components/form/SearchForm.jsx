@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SearchForm.scss';
 
-const SearchForm = ({ errorMsg, setRequestData }) => {
+const SearchForm = ({ errorMsg, setRequestData, setStartIndex }) => {
    const [titleInput, setTitleInput] = useState('');
    const [category, setBookCategory] = useState('All');
    const [sort, setSort] = useState('relevance');
@@ -28,14 +28,9 @@ const SearchForm = ({ errorMsg, setRequestData }) => {
    const handleSubmit = (e) => {
       e.preventDefault();
 
-      // проверка на пустоту поля input
-      if (!titleInput) {
-         errorMsg('Please, enter book title');
-      }
-      else {
-         let data = { titleInput, category, sort, apiKey };
-         setRequestData(data);
-      }
+      let data = { titleInput, category, sort, apiKey };
+      setRequestData(data);
+      setStartIndex(0);
    }
 
    // отправить форму по нажатию Enter
