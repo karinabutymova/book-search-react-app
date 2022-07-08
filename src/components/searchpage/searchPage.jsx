@@ -36,43 +36,42 @@ const SearchPage = () => {
    const isEqualRequest = () => JSON.stringify(prevRequestData.requestData) === JSON.stringify(requestData);
 
 
-   const getAxios = () => {
+   const getAxios = async () => {
 
       setIsLoading(true);
-      // setErrorMessage('');
 
-      let { titleInput, category, sort, apiKey } = requestData;
+      try {
+         let { titleInput, category, sort, apiKey } = requestData;
 
-      // формирование запроса
-      let request = `https://www.googleapis.com/books/v1/volumes?q=intitle:${titleInput}`;
-      category !== 'All'
-         ? request += `+subject:${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=${maxResult}&key=${apiKey}`
-         : request += `&orderBy=${sort}&startIndex=${startIndex}&maxResults=${maxResult}&key=${apiKey}`;
+         // формирование запроса
+         let request = `https://www.googleapis.com/books/v1/volumes?q=intitle:${titleInput}`;
+         category !== 'All'
+            ? request += `+subject:${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=${maxResult}&key=${apiKey}`
+            : request += `&orderBy=${sort}&startIndex=${startIndex}&maxResults=${maxResult}&key=${apiKey}`;
 
-      console.log(request);
+         // get запрос
+         const response = await axios.get(request);
 
-      // get запрос
-      axios.get(request)
-         .then(data => {
-            if (data.data.items && data.data.totalItems) {
-               setErrorMessage('');
-               isEqualRequest() ? setResult([...result, ...data.data.items]) : setResult(data.data.items);
-               setTotalItems(data.data.totalItems);
+         if (response.data.items && response.data.totalItems) {
+            setErrorMessage('');
+            isEqualRequest() ? setResult([...result, ...response.data.items]) : setResult(response.data.items);
+            setTotalItems(response.data.totalItems);
 
-            } else {
-               setResult([]);
-               setErrorMessage(`Books not found :(`);
-               setTotalItems(0);
-            }
-         })
-         .catch(error => {
-            setErrorMessage('Sorry, cannot connect to Google Book API. Please try again!');
+         } else {
             setResult([]);
+            setErrorMessage(`Books not found :(`);
             setTotalItems(0);
-         })
-         .finally(() => {
-            setIsLoading(false);
-         });
+         }
+
+      } catch (error) {
+         setErrorMessage(error.message);
+         // setErrorMessage('Sorry, cannot connect to Google Book API. Please try again!');
+         setResult([]);
+         setTotalItems(0);
+
+      } finally {
+         setIsLoading(false);
+      }
 
    }
 
@@ -138,7 +137,7 @@ const SearchPage = () => {
                      </div>
                   )}
 
-               {(result.length !== 0 || isLoading) &&
+               {((result.length || isLoading) && result.length < totalItems) &&
                   <div className="row justify-content-center">
                      <div className="col-6 col-md-6 col-lg-2">
                         <button onClick={loadMore} className={isLoading ? 'btn-load-more none-events' : 'btn-load-more'}>

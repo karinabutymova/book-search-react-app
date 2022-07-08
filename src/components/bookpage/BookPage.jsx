@@ -13,7 +13,6 @@ const BookPage = () => {
    const [error, setError] = useState(false);
    const [loading, isLoading] = useState(false);
 
-
    useEffect(() => {
       const fetchBook = () => {
          isLoading(true);
@@ -74,7 +73,8 @@ const BookPage = () => {
 
                         <div className="link-buttons">
                            {book.volumeInfo.infoLink !== undefined && <a className='more-button' href={book.volumeInfo.infoLink}> Learn more </a>}
-                           <Link className='back-to-search' to={`/`}> Go back to search </Link>
+                           {/* <Link className='back-to-search' to={`/`}> Go back to search </Link> */}
+                           <Link className='back-to-search' to={"/"}> Go back to search </Link>
                         </div>
                      </div>
                   </div>

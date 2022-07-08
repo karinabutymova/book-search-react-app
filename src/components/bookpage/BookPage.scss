@@ -25,19 +25,26 @@
 }
 
 .book-page{
+   display: flex;
+   align-items: center;
    background-color: #fff;
-   padding: 80px 80px 80px 0;
+   padding: 80px;
 
    margin-bottom: 40px;
 
    @media screen and (max-width: 576px) {
-      padding: 40px 40px 40px 0;
+      padding: 40px;
    }
 
    .book-page-img{
-      text-align: center;
       padding-bottom: 40px;
       min-height: 500px;
+
+      display: flex;
+      width: 100%;
+      align-items: center;
+      vertical-align: middle;
+      padding-left: 20%;
 
       img{
          width: 63%;
@@ -47,12 +54,22 @@
       .thumbnail-img{
          width: 35%;
          filter: drop-shadow(0px 0px 5px #4140406a);
+
+         @media screen and (max-width: 996px) {
+            width: 55%;
+         }
       }
    }
 
    .book-page-info{
       width: 100%;
       margin-left: -30px;
+      display: flex;
+      flex-direction: column;
+   
+      @media (max-width: 768px) { 
+         margin-left: 0;
+      }
 
       .category-title, .book-authors{
          width: 100%;
