@@ -1,9 +1,9 @@
 import React from 'react';
-import SearchPage from './components/searchpage/SearchPage';
+import SearchPage from '../searchpage/SearchPage';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import BookPage from './components/bookpage/BookPage';
-import Page404 from './components/page404/Page404';
+import BookPage from '../bookpage/BookPage';
+import Page404 from '../page404/Page404';
 
 
 const App = () => {
