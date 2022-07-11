@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import Preloader from '../preloader/Preloader';
 import noImage from '../../assets/images/no-image.jpg'
 
@@ -9,10 +9,15 @@ import Page404 from '../page404/Page404';
 
 const BookPage = () => {
    const { bookId } = useParams();
+   const navigate = useNavigate();
 
    const [book, setBook] = useState(null);
    const [error, setError] = useState(false);
    const [loading, isLoading] = useState(false);
+
+   const goBack = () => {
+      navigate(-1);
+   }
 
    useEffect(() => {
       const fetchBook = () => {
@@ -75,7 +80,7 @@ const BookPage = () => {
                                  <div className="link-buttons">
                                     {book.volumeInfo.infoLink !== undefined && <a className='more-button' href={book.volumeInfo.infoLink}> Learn more </a>}
                                     {/* <Link className='back-to-search' to={`/`}> Go back to search </Link> */}
-                                    <Link className='back-to-search' to={"/"}> Go back to search </Link>
+                                    <button className='back' onClick={goBack}> Go back to search </button>
                                  </div>
                               </div>
                            </div>

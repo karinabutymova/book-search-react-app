@@ -11,6 +11,8 @@ import BooksList from '../bookslist/BooksList';
 
 const SearchPage = () => {
    const maxResult = 30;
+   const apiKey = "AIzaSyArvsaejhkJKVKaMHhXUFldx-6zBjbVOIw";
+
 
    const [result, setResult] = useState([]);
    const [startIndex, setStartIndex] = useState(0);
@@ -41,14 +43,15 @@ const SearchPage = () => {
       setIsLoading(true);
 
       try {
-         let { titleInput, category, sort, apiKey } = requestData;
+         let { title, category, sort } = requestData;
 
          // формирование запроса
-         let request = `https://www.googleapis.com/books/v1/volumes?q=intitle:${titleInput}`;
+         let request = `https://www.googleapis.com/books/v1/volumes?q=intitle:${title}`;
          category !== 'All'
             ? request += `+subject:${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=${maxResult}&key=${apiKey}`
             : request += `&orderBy=${sort}&startIndex=${startIndex}&maxResults=${maxResult}&key=${apiKey}`;
 
+         console.log(request)
          // get запрос
          const response = await axios.get(request);
 
@@ -78,11 +81,11 @@ const SearchPage = () => {
    useEffect(() => {
       const searchBookQuery = () => {
 
-         let { titleInput } = requestData;
+         let { title } = requestData;
 
          if (!isEqualRequest()) setTotalItems(0);
 
-         if (titleInput) getAxios();
+         if (title) getAxios();
          else {
             setErrorMessage('Please, enter book title');
             setResult([]);
