@@ -3,17 +3,20 @@ import './SearchForm.scss';
 
 import { useSearchParams } from 'react-router-dom';
 
-const SearchForm = ({ setRequestData, setStartIndex }) => {
-   const [searchParams, setSearchParams] = useSearchParams({ title: '', category: 'All', sort: 'relevance' });
+const SearchForm = ({ setRequestData }) => {
+   const [searchParams, setSearchParams] = useSearchParams({ title: '', category: 'All', sort: 'relevance', startIndex: 0 });
 
    useEffect(() => {
-      if (searchParams.get('title'))
+      if (localStorage.getItem("books"))
          fetchData();
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    const fetchData = () => {
-      setRequestData(Object.fromEntries([...searchParams]));
-      setStartIndex(0);
+      let { title, category, sort } = Object.fromEntries([...searchParams]);
+
+      setRequestData({ title, category, sort });
    }
 
    // обработка изменений элементов формы
@@ -37,13 +40,18 @@ const SearchForm = ({ setRequestData, setStartIndex }) => {
 
    const handleSubmit = (e) => {
       e.preventDefault();
+
+      // обнуление пагинации
+      searchParams.set('startIndex', 0);
+      setSearchParams(searchParams);
+
       fetchData();
    }
 
    // отправить форму по нажатию Enter
    const handleKeyPress = (e) => {
       if (e.key === "Enter") {
-         fetchData();
+         handleSubmit(e);
       }
    }
 

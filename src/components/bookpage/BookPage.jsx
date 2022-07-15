@@ -30,6 +30,7 @@ const BookPage = () => {
             })
             .catch(error => {
                setError('Sorry, cannot connect to Google Book API. Please try again!');
+               console.log(error);
             })
             .finally(() => {
                isLoading(false);

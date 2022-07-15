@@ -12,7 +12,7 @@ const App = () => {
       <>
          <Router>
             <Routes>
-               <Route exact path="/*" element={<SearchPage />} />
+               <Route exact path="/" element={<SearchPage />} />
                <Route path="/book/:bookId" element={<BookPage />} />
                <Route path="*" element={<Page404 />} status={404} />
             </Routes>
