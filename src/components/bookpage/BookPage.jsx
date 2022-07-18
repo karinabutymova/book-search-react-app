@@ -63,11 +63,8 @@ const BookPage = () => {
                            <div className="col-12 col-md-12 col-lg-6">
                               <div className="book-page-img">
                                  {book.volumeInfo.imageLinks === undefined && <img src={noImage} alt={book.volumeInfo.title} />}
-                                 {book.volumeInfo.imageLinks !== undefined && book.volumeInfo.imageLinks.hasOwnProperty('large')
-                                    && < img src={book.volumeInfo.imageLinks.large} alt={book.volumeInfo.title} />
-                                 }
-                                 {book.volumeInfo.imageLinks !== undefined && !book.volumeInfo.imageLinks.hasOwnProperty('large')
-                                    && <img className='thumbnail-img' src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
+                                 {book.volumeInfo.imageLinks !== undefined &&
+                                    <img className='thumbnail-img' src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
                                  }
                               </div>
                            </div>

@@ -24,7 +24,6 @@ const SearchPage = () => {
 
    const [requestData, setRequestData] = useState({});
 
-
    useEffect(() => {
 
       const getAxios = async () => {
@@ -72,15 +71,21 @@ const SearchPage = () => {
          if (localStorage.getItem('books')) {
 
             let books = JSON.parse(localStorage.getItem("books"));
+            let pageInfo = books.pop();
+
+            scroll.scrollTo(pageInfo.offsetTop);
+            setTotalItems(pageInfo.totalItems);
+            setResult(books);
+
+
             localStorage.removeItem('books');
 
-            setTotalItems(books.pop().totalItems);
-            setResult(books);
          } else {
             if (title) getAxios();
             else {
                setErrorMessage('Please, enter book title');
                setResult([]);
+               setTotalItems(0);
             }
          }
       }
@@ -129,7 +134,7 @@ const SearchPage = () => {
                         {totalItems > 0 && <h6 className='col-12 total-book-count'>Found {totalItems} results</h6>}
 
                         {/* вывод карточек книг */}
-                        <BooksList books={result} totalItems={totalItems} />
+                        {result.length > 0 && <BooksList books={result} totalItems={totalItems} />}
                      </div>
                   )}
 
