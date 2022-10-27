@@ -1,40 +1,22 @@
 import React, { useEffect } from 'react';
-import './SearchForm.scss';
-
 import { useSearchParams } from 'react-router-dom';
+import { fetchData, setURLParams } from './functions';
+import './SearchForm.scss';
 
 const SearchForm = ({ setRequestData }) => {
    const [searchParams, setSearchParams] = useSearchParams({ title: '', category: 'All', sort: 'relevance', startIndex: 0 });
 
    useEffect(() => {
-      if (localStorage.getItem("books"))
-         fetchData();
-
+      if (localStorage.getItem("books")) {
+         fetchData(searchParams, setRequestData);
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
-   const fetchData = () => {
-      let { title, category, sort } = Object.fromEntries([...searchParams]);
-
-      setRequestData({ title, category, sort });
-   }
 
    // обработка изменений элементов формы
    const handleChange = (e) => {
-      switch (e.currentTarget.name) {
-         case 'title':
-            e.currentTarget.value ? searchParams.set('title', e.currentTarget.value) : searchParams.delete('title');
-            break;
-         case 'category':
-            searchParams.set('category', e.currentTarget.value);
-            break;
-         case 'sort':
-            searchParams.set('sort', e.currentTarget.value);
-            break;
-         default:
-            break;
-      }
-
+      setURLParams(e, searchParams);
       setSearchParams(searchParams);
    }
 
@@ -45,7 +27,7 @@ const SearchForm = ({ setRequestData }) => {
       searchParams.set('startIndex', 0);
       setSearchParams(searchParams);
 
-      fetchData();
+      fetchData(searchParams, setRequestData);
    }
 
    // отправить форму по нажатию Enter

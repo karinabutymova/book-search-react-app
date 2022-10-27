@@ -1,5 +1,4 @@
 import React from 'react';
-import uniqid from 'uniqid';
 import BookCard from '../bookcard/BookCard';
 
 const BooksList = ({ books, totalItems }) => {
@@ -10,7 +9,7 @@ const BooksList = ({ books, totalItems }) => {
 
    return (
       <>
-         {books && books.map((book) => <BookCard key={uniqid()} book={book} rememberBooks={(offsetTop) => rememberBooks(offsetTop)} />)}
+         {books && books.map((book) => <BookCard key={book.etag} book={book} rememberBooks={(offsetTop) => rememberBooks(offsetTop)} />)}
       </>
    );
 }

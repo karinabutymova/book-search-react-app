@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
-import { animateScroll as scroll } from 'react-scroll'
+import { animateScroll as scroll } from 'react-scroll';
+import { requestLine, loadMore, getBooksFromLocalStorage } from './functions';
+import axios from 'axios';
 
 import './SearchPage.scss';
 import Preloader from '../preloader/Preloader';
@@ -27,25 +28,18 @@ const SearchPage = () => {
    useEffect(() => {
 
       const getAxios = async () => {
-
          setIsLoading(true);
 
          try {
-            let { title, category, sort } = requestData;
-            let startIndex = ~~searchParams.get('startIndex');
-
             // формирование запроса
-            let request = `https://www.googleapis.com/books/v1/volumes?q=intitle:${title}`;
-            category !== 'All'
-               ? request += `+subject:${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=${maxResult}&key=${apiKey}`
-               : request += `&orderBy=${sort}&startIndex=${startIndex}&maxResults=${maxResult}&key=${apiKey}`;
+            let request = requestLine(requestData, searchParams, maxResult, apiKey);
 
             // get запрос
             const response = await axios.get(request);
 
             if (response.data.items && response.data.totalItems) {
                setErrorMessage('');
-               startIndex !== 0 ? setResult([...result, ...response.data.items]) : setResult(response.data.items);
+               ~~searchParams.get('startIndex') !== 0 ? setResult([...result, ...response.data.items]) : setResult(response.data.items);
                setTotalItems(response.data.totalItems);
 
             } else {
@@ -59,29 +53,20 @@ const SearchPage = () => {
             setResult([]);
             setTotalItems(0);
 
-         } finally {
-            setIsLoading(false);
          }
+
+         setIsLoading(false);
 
       }
 
       const searchBookQuery = () => {
-         let { title } = requestData;
-
          if (localStorage.getItem('books')) {
-
-            let books = JSON.parse(localStorage.getItem("books"));
-            let pageInfo = books.pop();
-
-            scroll.scrollTo(pageInfo.offsetTop);
-            setTotalItems(pageInfo.totalItems);
-            setResult(books);
-
-
-            localStorage.removeItem('books');
+            getBooksFromLocalStorage(scroll, setTotalItems, setResult);
 
          } else {
-            if (title) getAxios();
+            if (requestData.title) {
+               getAxios();
+            }
             else {
                setErrorMessage('Please, enter book title');
                setResult([]);
@@ -94,11 +79,6 @@ const SearchPage = () => {
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [requestData, searchParams.get('startIndex')]);
-
-   const loadMore = () => {
-      searchParams.set('startIndex', ~~searchParams.get('startIndex') + maxResult);
-      setSearchParams(searchParams);
-   };
 
 
    return (
@@ -141,7 +121,7 @@ const SearchPage = () => {
                {((result.length || isLoading) && result.length < totalItems) &&
                   <div className="row justify-content-center">
                      <div className="col-6 col-md-6 col-lg-2">
-                        <button onClick={loadMore} className={isLoading ? 'btn-load-more none-events' : 'btn-load-more'}>
+                        <button onClick={() => loadMore(searchParams, setSearchParams, maxResult)} className={isLoading ? 'btn-load-more none-events' : 'btn-load-more'}>
                            {isLoading ? 'Loading...' : 'Load More'}
                         </button>
                      </div>

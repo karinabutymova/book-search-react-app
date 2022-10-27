@@ -10,6 +10,8 @@ const BookCard = ({ book, rememberBooks }) => {
       rememberBooks(scrollBook.current.offsetTop);
    }
 
+   const authors = () => book.volumeInfo.authors.join(', ');
+
    return (
       <div className="col-6 col-md-4 col-lg-3" >
          <Link to={`/book/${book.id}`} className="link">
@@ -19,7 +21,7 @@ const BookCard = ({ book, rememberBooks }) => {
                </div>
                <p className="category-title">{book.volumeInfo.categories === undefined ? ' ' : book.volumeInfo.categories[0]}</p>
                <p className="book-title">{book.volumeInfo.title === undefined ? " " : book.volumeInfo.title}</p>
-               <p className="book-authors">{book.volumeInfo.authors === undefined ? " " : book.volumeInfo.authors.join(', ')}</p>
+               <p className="book-authors">{book.volumeInfo.authors === undefined ? " " : authors()}</p>
             </div>
          </Link >
       </div>

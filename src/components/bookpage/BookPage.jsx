@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { categoryJoin, authorsJoin, axoisRequest } from './functions';
 import Preloader from '../preloader/Preloader';
 import noImage from '../../assets/images/no-image.jpg'
 
@@ -9,36 +9,30 @@ import Page404 from '../page404/Page404';
 
 const BookPage = () => {
    const { bookId } = useParams();
-   const navigate = useNavigate();
-
    const [book, setBook] = useState(null);
    const [error, setError] = useState(false);
    const [loading, isLoading] = useState(false);
 
-   const goBack = () => {
-      navigate(-1);
-   }
+   const navigate = useNavigate();
+   const goBack = () => navigate(-1);
 
    useEffect(() => {
-      const fetchBook = () => {
-         isLoading(true);
-         setBook(null);
 
-         axios.get(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
-            .then(data => {
-               setBook(data.data);
-            })
-            .catch(error => {
-               setError('Sorry, cannot connect to Google Book API. Please try again!');
-               console.log(error);
-            })
-            .finally(() => {
-               isLoading(false);
-            });
-      };
+      isLoading(true);
 
-      fetchBook();
-   }, [bookId]);
+      axoisRequest(bookId)
+         .then(data => {
+            setBook(data.data);
+         })
+         .catch(error => {
+            setError('Sorry, cannot connect to Google Book API. Please try again!');
+         })
+         .finally(() => {
+            isLoading(false);
+         });
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
 
    return (
@@ -70,9 +64,9 @@ const BookPage = () => {
                            </div>
                            <div className="col-12 col-md-12 col-lg-6">
                               <div className="book-page-info">
-                                 {book.volumeInfo.categories && <p className="category-title">{book.volumeInfo.categories.join('/')}</p>}
+                                 {book.volumeInfo.categories && <p className="category-title">{categoryJoin(book)}</p>}
                                  {book.volumeInfo.title && <p className="book-title">{book.volumeInfo.title}</p>}
-                                 {book.volumeInfo.authors && <p className="book-authors">{book.volumeInfo.authors.join(', ')}</p>}
+                                 {book.volumeInfo.authors && <p className="book-authors">{authorsJoin(book)}</p>}
                                  {book.volumeInfo.description && <p className="book-description" dangerouslySetInnerHTML={{ __html: book.volumeInfo.description }} />}
 
                                  <div className="link-buttons">
